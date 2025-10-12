@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game.CodeBase.Input
+namespace Input
 {
     public class JoyStick : MonoBehaviour
     {
@@ -11,6 +12,7 @@ namespace Game.CodeBase.Input
         private VisualElement _joystickVisualArea;
         private VisualElement _joystickTouchArea;
 
+        private float _halfWidth;
         private Vector2 _inputDelta;
         private Vector2 _defaultPos;
         private Vector2 _startPos;
@@ -18,7 +20,10 @@ namespace Game.CodeBase.Input
         private bool _isDragging;
         private bool _isInitialized = false;
 
-
+        public event Action OnStartMoving;
+        public event Action<Vector2> OnMoving;
+        public event Action OnEndMoving;
+        
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -28,13 +33,14 @@ namespace Game.CodeBase.Input
             _joystickVisualArea = _root.Q<VisualElement>("joystickVisualArea");
             _joystickTouchArea = _root.Q<VisualElement>("joystickTouchArea");
 
-            _joystickTouchArea.RegisterCallback<GeometryChangedEvent>(OnAttach);
+            _joystickTouchArea.RegisterCallback<GeometryChangedEvent>(InitUI);
             _joystickTouchArea.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _joystickTouchArea.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _joystickTouchArea.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            
         }
 
-        private void OnAttach(GeometryChangedEvent geometryChangedEvent)
+        private void InitUI(GeometryChangedEvent geometryChangedEvent)
         {
             if (_isInitialized)
                 return;
@@ -47,13 +53,23 @@ namespace Game.CodeBase.Input
                 _joystickStick.resolvedStyle.left,
                 _joystickStick.resolvedStyle.top
             );
+
+            _halfWidth = _joystickVisualArea.resolvedStyle.width / 2f;
         }
 
         private void OnPointerDown(PointerDownEvent evt)
         {
             _isDragging = true;
             _startPos = evt.localPosition;
+
+            _joystickVisualArea.style.left = _startPos.x - _halfWidth;
+            _joystickVisualArea.style.top  = _startPos.y - _halfWidth;
+            
+            _joystickVisualArea.style.display = DisplayStyle.Flex;
+
+            OnStartMoving?.Invoke();
         }
+
 
         private void OnPointerMove(PointerMoveEvent evt)
         {
@@ -67,7 +83,9 @@ namespace Game.CodeBase.Input
             _joystickStick.style.left = _defaultPos.x + delta.x;
             _joystickStick.style.top = _defaultPos.y + delta.y;
             
-            _inputDelta = delta / _maxRadius;
+            _inputDelta = new Vector2(delta.x, -delta.y) / _maxRadius;
+            
+            OnMoving?.Invoke(_inputDelta);
         }
 
         private void OnPointerUp(EventBase evt)
@@ -75,6 +93,11 @@ namespace Game.CodeBase.Input
             _isDragging = false;
             _joystickStick.style.left = _defaultPos.x;
             _joystickStick.style.top = _defaultPos.y;
+            _inputDelta = Vector2.zero;
+            
+            _joystickVisualArea.style.display = DisplayStyle.None;
+            
+            OnEndMoving?.Invoke();
         }
     }
 }
