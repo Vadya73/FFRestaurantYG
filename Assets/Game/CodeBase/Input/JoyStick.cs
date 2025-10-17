@@ -37,7 +37,6 @@ namespace Input
             _joystickTouchArea.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _joystickTouchArea.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _joystickTouchArea.RegisterCallback<PointerUpEvent>(OnPointerUp);
-            
         }
 
         private void InitUI(GeometryChangedEvent geometryChangedEvent)
@@ -55,6 +54,8 @@ namespace Input
             );
 
             _halfWidth = _joystickVisualArea.resolvedStyle.width / 2f;
+            
+            _joystickVisualArea.style.display = DisplayStyle.None;
         }
 
         private void OnPointerDown(PointerDownEvent evt)

@@ -8,6 +8,7 @@ namespace Player
     {
         [SerializeField] private JoyStick _joystick;
         [SerializeField] private float _speed = 10f;
+        [SerializeField] private GameObject _visualModel;
     
         private PlayerController _playerController;
         private Rigidbody _rigidbody;
@@ -18,7 +19,7 @@ namespace Player
         {
             _rigidbody = GetComponent<Rigidbody>();
         
-            _playerController = new PlayerController(_rigidbody, _speed);
+            _playerController = new PlayerController(_rigidbody, _speed, _visualModel);
             
             _joystick.OnStartMoving += StartMoving;
             _joystick.OnMoving += SetMoveDelta;
@@ -33,11 +34,13 @@ namespace Player
         private void StartMoving()
         {
             _playerController.StartMoving();
+            _playerController.StartRotate();
         }
 
         private void EndMoving()
         {
             _playerController.EndMoving();
+            _playerController.EndRotate();
         }
 
         private void SetMoveDelta(Vector2 moveDelta)
