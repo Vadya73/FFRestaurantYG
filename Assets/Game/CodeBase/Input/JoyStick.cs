@@ -11,6 +11,8 @@ namespace Input
         private VisualElement _joystickStick;
         private VisualElement _joystickVisualArea;
         private VisualElement _joystickTouchArea;
+        
+        private Button _interactButton;
 
         private float _halfWidth;
         private Vector2 _inputDelta;
@@ -24,6 +26,8 @@ namespace Input
         public event Action<Vector2> OnMoving;
         public event Action OnEndMoving;
         
+        public event Action OnInteractButtonClicked;
+        
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
@@ -32,13 +36,17 @@ namespace Input
             _joystickStick = _root.Q<VisualElement>("joystickStick");
             _joystickVisualArea = _root.Q<VisualElement>("joystickVisualArea");
             _joystickTouchArea = _root.Q<VisualElement>("joystickTouchArea");
+            
+            _interactButton = _root.Q<Button>("InteractButton");
 
             _joystickTouchArea.RegisterCallback<GeometryChangedEvent>(InitUI);
             _joystickTouchArea.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _joystickTouchArea.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _joystickTouchArea.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            
+            _interactButton.RegisterCallback<ClickEvent>(OnInteract);
         }
-
+        
         private void InitUI(GeometryChangedEvent geometryChangedEvent)
         {
             if (_isInitialized)
@@ -56,6 +64,12 @@ namespace Input
             _halfWidth = _joystickVisualArea.resolvedStyle.width / 2f;
             
             _joystickVisualArea.style.display = DisplayStyle.None;
+            _interactButton.style.display = DisplayStyle.None;
+        }
+
+        public void InteractButtonSetActive(bool active)
+        {
+            _interactButton.style.display = active ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void OnPointerDown(PointerDownEvent evt)
@@ -100,5 +114,7 @@ namespace Input
             
             OnEndMoving?.Invoke();
         }
+        
+        private void OnInteract(ClickEvent evt) => OnInteractButtonClicked?.Invoke();
     }
 }

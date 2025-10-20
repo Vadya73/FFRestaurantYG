@@ -18,8 +18,6 @@ namespace Player
 
         public event Action OnStartMove;
         public event Action OnEndMove;
-        public event Action OnStartRotate;
-        public event Action OnEndRotate;
     
         public PlayerController(Rigidbody playerRigidbody, float speed, GameObject visualModel)
         {
@@ -52,17 +50,9 @@ namespace Player
             OnEndMove?.Invoke();
         }
 
-        public void StartRotate()
-        {
-            _isRotating = true;
-            OnStartRotate?.Invoke();
-        }
+        public void StartRotate() => _isRotating = true;
 
-        public void EndRotate()
-        {
-            _isRotating = false;
-            OnEndRotate?.Invoke();
-        }
+        public void EndRotate() => _isRotating = false;
 
         public void SetMoveDelta(Vector3 moveDelta) => _movingDelta = moveDelta;
 

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2688fb8bbf4c1787d4b999ec73b6e1, type: 3}
   m_Name: PotatoFree
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.CookingObjectConfig
-  _prefab: {fileID: 0}
+  _type: 1
+  _prefab: {fileID: 8537102870702347964, guid: 7e85471c57d33fc4dbc6fa94fc9ab4c6, type: 3}
+  _icon: {fileID: 0}
+  _sellCost: 10

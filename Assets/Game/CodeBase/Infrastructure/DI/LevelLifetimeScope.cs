@@ -1,4 +1,5 @@
 using Camera;
+using Input;
 using VContainer;
 using VContainer.Unity;
 
@@ -8,6 +9,7 @@ namespace Infrastructure.DI
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterComponentInHierarchy<JoyStick>().AsSelf();
             RegisterPlayer(builder);
             RegisterCamera(builder);
         }

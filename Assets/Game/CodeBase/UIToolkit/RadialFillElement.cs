@@ -89,7 +89,9 @@ namespace UIToolkit
                 get { yield break; }
             }
             [Obsolete("Obsolete")]
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
             {
                 base.Init(ve, bag, cc);
                 var ate = ve as RadialFillElement;
@@ -233,5 +235,19 @@ namespace UIToolkit
                 }
             }
         }
+        
+        public void Hide()
+        {
+            style.display = DisplayStyle.None;
+            radialFill.generateVisualContent -= OnGenerateVisualContent;
+        }
+
+        public void Show()
+        {
+            style.display = DisplayStyle.Flex;
+            radialFill.generateVisualContent += OnGenerateVisualContent;
+            radialFill.MarkDirtyRepaint();
+        }
+
     }
 }

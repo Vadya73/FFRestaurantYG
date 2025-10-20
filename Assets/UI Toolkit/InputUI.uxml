@@ -3,5 +3,6 @@
         <ui:VisualElement name="joystickVisualArea" style="position: absolute; background-color: rgba(77, 77, 77, 0.5); width: 400px; height: 400px; flex-direction: column; bottom: 50px; right: auto; left: 50px; top: auto; transform-origin: center;">
             <ui:VisualElement name="joystickStick" style="background-image: url(&quot;project://database/Assets/Art/new-moon.png?fileID=21300000&amp;guid=db94b4e5177ae714e895b49505fa8cec&amp;type=3#new-moon&quot;); width: 25%; height: 25%; background-size: 100% 100%; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; flex-direction: column; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; position: absolute; bottom: 0; top: 150px; left: 150px; right: 0;" />
         </ui:VisualElement>
+        <ui:Button text="Interact" focusable="false" name="InteractButton" style="position: absolute; top: 70%; left: 1571px; width: 200px; height: 200px; -unity-font-style: bold; font-size: 33px; -unity-text-generator: advanced; -unity-text-auto-size: best-fit 1px 50px;" />
     </ui:VisualElement>
 </ui:UXML>

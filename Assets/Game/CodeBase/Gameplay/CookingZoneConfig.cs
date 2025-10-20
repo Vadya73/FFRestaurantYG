@@ -8,6 +8,7 @@ namespace Gameplay
         [SerializeField] private CookingObjectConfig _cookableObject;
         [SerializeField] private float _cookingTime;
         
+        public CookingObjectConfig CookableObject => _cookableObject;
         public float CookingTime => _cookingTime;
     }
 }
