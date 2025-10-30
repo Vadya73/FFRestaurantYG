@@ -14,18 +14,18 @@ namespace Player
         [SerializeField] private GameObject _tray;
         [SerializeField] private Transform _cookedObjectPosition;
     
-        private PlayerController _playerController;
+        private MovementController _movementController;
         private TraySystem _traySystem;
         private Rigidbody _rigidbody;
         
-        public PlayerController PlayerController => _playerController;
+        public MovementController MovementController => _movementController;
         public TraySystem TraySystem => _traySystem;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         
-            _playerController = new PlayerController(_rigidbody, _speed, _visualModel);
+            _movementController = new MovementController(_rigidbody, _speed, _visualModel);
             _traySystem = new TraySystem(_tray, _cookedObjectPosition);
             
             _joystick.OnStartMoving += StartMoving;
@@ -43,24 +43,24 @@ namespace Player
 
         private void Update()
         {
-            _playerController.Update(Time.deltaTime);
+            _movementController.Update(Time.deltaTime);
         }
 
         private void StartMoving()
         {
-            _playerController.StartMoving();
-            _playerController.StartRotate();
+            _movementController.StartMoving();
+            _movementController.StartRotate();
         }
 
         private void EndMoving()
         {
-            _playerController.EndMoving();
-            _playerController.EndRotate();
+            _movementController.EndMoving();
+            _movementController.EndRotate();
         }
 
         private void SetMoveDelta(Vector2 moveDelta)
         {
-            _playerController.SetMoveDelta(new Vector3(moveDelta.x, 0f, moveDelta.y));
+            _movementController.SetMoveDelta(new Vector3(moveDelta.x, 0f, moveDelta.y));
         }
         
         public void SetTrayActive(bool active) => _tray.SetActive(active);

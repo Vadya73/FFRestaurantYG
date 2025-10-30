@@ -10,7 +10,7 @@ namespace Camera
         [SerializeField] private Vector3 _followOffset;
         [SerializeField] private float _followSmoothTime = 0.2f;
         
-        private PlayerController _playerController;
+        private MovementController _movementController;
         private Transform _objectTransform;
         private Vector3 _velocity;
 
@@ -24,7 +24,7 @@ namespace Camera
         [Inject]
         private void Construct(Player.Player player)
         {
-            _playerController = player.PlayerController;   
+            _movementController = player.MovementController;   
         }
 
         private void Awake()

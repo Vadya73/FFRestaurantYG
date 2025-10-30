@@ -1,4 +1,5 @@
 using Camera;
+using Gameplay;
 using Input;
 using VContainer;
 using VContainer.Unity;
@@ -10,6 +11,8 @@ namespace Infrastructure.DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<JoyStick>().AsSelf();
+            builder.RegisterComponentInHierarchy<ClientSystem>().AsSelf();
+            builder.RegisterComponentInHierarchy<RestaurantSystem>().AsSelf();
             RegisterPlayer(builder);
             RegisterCamera(builder);
         }

@@ -52,8 +52,8 @@ namespace Gameplay
         {
             if (other.TryGetComponent(out Player.Player player))
             {
-                player.PlayerController.OnEndMove += StartCooking;
-                player.PlayerController.OnStartMove += StopCooking;
+                player.MovementController.OnEndMove += StartCooking;
+                player.MovementController.OnStartMove += StopCooking;
             }
         }
 
@@ -61,8 +61,8 @@ namespace Gameplay
         {
             if (other.TryGetComponent(out Player.Player player))
             {
-                player.PlayerController.OnEndMove -= StartCooking;
-                player.PlayerController.OnStartMove -= StopCooking;
+                player.MovementController.OnEndMove -= StartCooking;
+                player.MovementController.OnStartMove -= StopCooking;
             }
         }
 
@@ -101,9 +101,9 @@ namespace Gameplay
             _countDownTimer.ResetTime();
             
             _cookingSequence = DOTween.Sequence()
-                .AppendCallback(() => _player.PlayerController.StartMoveAtPoint(transform.position))
+                .AppendCallback(() => _player.MovementController.StartMoveAtPoint(transform.position))
                 .AppendInterval(.3f)
-                .AppendCallback(() => _player.PlayerController.LookAt(_lookAtObject.position, .5f))
+                .AppendCallback(() => _player.MovementController.LookAt(_lookAtObject.position, .5f))
                 .AppendInterval(.3f)
                 .OnComplete(() => _countDownTimer.Play());
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerController
+    public class MovementController
     {
         private readonly Rigidbody _playerRigidbody;
         private readonly GameObject _visualModel;
@@ -19,7 +19,7 @@ namespace Player
         public event Action OnStartMove;
         public event Action OnEndMove;
     
-        public PlayerController(Rigidbody playerRigidbody, float speed, GameObject visualModel)
+        public MovementController(Rigidbody playerRigidbody, float speed, GameObject visualModel)
         {
             _playerRigidbody = playerRigidbody;
             _speed = speed;
